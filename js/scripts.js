@@ -1,54 +1,17 @@
-/*!
- * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-agency/blob/master/LICENSE)
- */
-(function ($) {
-    "use strict";
+// Hamburger menu toggle
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
 
-    // Smooth scrolling using jQuery easing
-    $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
-        if (
-            location.pathname.replace(/^\//, "") ==
-                this.pathname.replace(/^\//, "") &&
-            location.hostname == this.hostname
-        ) {
-            var target = $(this.hash);
-            target = target.length
-                ? target
-                : $("[name=" + this.hash.slice(1) + "]");
-            if (target.length) {
-                $("html, body").animate(
-                    {
-                        scrollTop: target.offset().top - 72,
-                    },
-                    1000,
-                    "easeInOutExpo"
-                );
-                return false;
-            }
-        }
-    });
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+});
 
-    // Close responsive menu
-    $(".js-scroll-trigger").click(function () {
-        $(".navbar-collapse").collapse("hide");
-    });
-
-    // Scrollspy
-    $("body").scrollspy({
-        target: "#mainNav",
-        offset: 74,
-    });
-
-    // Navbar shrink
-    var navbarCollapse = function () {
-        if ($("#mainNav").offset().top > 100) {
-            $("#mainNav").addClass("navbar-shrink");
-        } else {
-            $("#mainNav").removeClass("navbar-shrink");
-        }
-    };
-
-    navbarCollapse();
-    $(window).scroll(navbarCollapse);
-
-})(jQuery);
+// Smooth scroll for internal links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e){
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    target.scrollIntoView({ behavior: 'smooth' });
+    if(navLinks.classList.contains('active')) navLinks.classList.remove('active');
+  });
+});
